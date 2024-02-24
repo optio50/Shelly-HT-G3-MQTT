@@ -8,7 +8,7 @@ The stored data includes Temperature, Humidity, Battery Volts and Battery Percen
 ![Alt Text](./HT-Chart.png)    
 To install make sure you have the additional modules installed    
 `pip install pandas numpy matplotlib paho-mqtt`    
-`git clone https://github.com/optio50/Shelly-HT-G3-MQTT`
+`git clone https://github.com/optio50/Shelly-HT-G3-MQTT`    
 `cd Shelly-HT-G3-MQTT`    
 `chmod +x HT-Chart.py`    
 `chmod +x HT-MQTT.py`    
