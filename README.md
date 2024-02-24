@@ -12,7 +12,7 @@ To install make sure you have the additional modules installed
 `cd Shelly-HT-G3-MQTT`    
 `chmod +x HT-Chart.py`    
 `chmod +x HT-MQTT.py`    
-Rename the csv file to start you own (I have included mine so you can test the chart tool)    
+Rename the csv file to start your own (I have included mine so you can test the chart tool)    
 `mv HT-sensor-log.csv HT-sensor-log-old.csv`   
 `./HT-MQTT.py` to start viewing and recording data.    
 You can run the script from the terminal or a cron job / startup routine.    
