@@ -26,4 +26,8 @@ You can manually trigger an update by single pressing the reset button.
 🠉   reading is increasing from last update    
 🠋   reading is decreasing from last update    
 🠈🠊 reading is the same as last update    
+    
+    
 
+You need an MQTT broker to send your data to. This script only retrieves the data from the broker. The broker can be on your local machine.    
+Each H&T must be setup to sent the data to the broker. Edit the HT-MQTT.py file and make the noted changes.    
