@@ -37,7 +37,8 @@ csv_filename = sys.argv[1]
 sensor_location = sys.argv[2]
 
 # Load your CSV data
-df = pd.read_csv(csv_filename, parse_dates=['Timestamp'])
+df = pd.read_csv(csv_filename, parse_dates=['Timestamp'], date_format='%Y-%m-%d %H:%M:%S')
+#df = pd.read_csv(csv_filename, parse_dates=['Timestamp'])
 df.set_index('Timestamp', inplace=True)
 
 # Filter the data based on the specified Sensor Location
@@ -47,7 +48,7 @@ df_filtered = df[df['Sensor Location'] == sensor_location]
 sensor_types = df_filtered['Sensor Type'].unique()
 
 # Specify individual colors for each sensor type
-individual_colors = ['red', 'green', 'blue', 'orangered']
+individual_colors = ['red', 'blue', 'green', 'orangered']
 
 # Set the desired initial window size (width, height) in inches
 initial_figsize = (10, 7)  # Adjust the values based on your preference
@@ -58,7 +59,13 @@ root.withdraw()  # Hide the main Tkinter window
 
 # Date picker dialog
 selected_date_str = simpledialog.askstring("Date Selection", "Enter Date (YYYY-MM-DD):\nLeave blank for all days")
-selected_date = pd.to_datetime(selected_date_str, errors='coerce').date()
+try:
+    selected_date = pd.to_datetime(selected_date_str).date()
+except (TypeError, ValueError) as e:
+    print(f"Error parsing date: {e}")
+    selected_date = None
+
+
 
 # Check if the entered date is valid
 if pd.isnull(selected_date):

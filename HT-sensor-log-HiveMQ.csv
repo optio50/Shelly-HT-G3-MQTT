@@ -1,0 +1,5 @@
+Timestamp,Sensor Location,Sensor Type,Sensor Value
+2024-02-23 21:38:59,BedRoom1,Temperature,70.8
+2024-02-23 21:38:59,BedRoom1,Humidity,27.8
+2024-02-23 21:38:59,BedRoom1,BatteryVolts,5.09
+2024-02-23 21:38:59,BedRoom1,BatteryPercent,54
