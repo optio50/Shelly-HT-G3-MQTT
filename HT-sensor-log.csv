@@ -1,0 +1,325 @@
+Timestamp,Sensor Location,Sensor Type,Sensor Value
+2024-02-22 15:00:13,Computer Room,Temperature,72.4
+2024-02-22 15:00:13,Computer Room,Humidity,28.1
+2024-02-22 15:00:13,Computer Room,BatteryVolts,5.21
+2024-02-22 15:00:13,Computer Room,BatteryPercent,60
+2024-02-22 15:01:27,Living Room,Temperature,67.1
+2024-02-22 15:01:27,Living Room,Humidity,35.3
+2024-02-22 15:01:27,Living Room,BatteryVolts,5.32
+2024-02-22 15:01:27,Living Room,BatteryPercent,65
+2024-02-22 15:03:23,Garage,Temperature,52.4
+2024-02-22 15:03:23,Garage,Humidity,37.9
+2024-02-22 15:03:23,Garage,BatteryVolts,5.26
+2024-02-22 15:03:23,Garage,BatteryPercent,62
+2024-02-22 15:06:03,Computer Room,Temperature,75.3
+2024-02-22 15:06:03,Computer Room,Humidity,25.9
+2024-02-22 15:06:03,Computer Room,BatteryVolts,5.21
+2024-02-22 15:06:03,Computer Room,BatteryPercent,60
+2024-02-22 15:09:02,Garage,Temperature,53.3
+2024-02-22 15:09:02,Garage,Humidity,37
+2024-02-22 15:09:02,Garage,BatteryVolts,5.26
+2024-02-22 15:09:02,Garage,BatteryPercent,62
+2024-02-22 15:16:01,Computer Room,Temperature,72.9
+2024-02-22 15:16:01,Computer Room,Humidity,26.8
+2024-02-22 15:16:01,Computer Room,BatteryVolts,5.22
+2024-02-22 15:16:01,Computer Room,BatteryPercent,60
+2024-02-22 15:25:01,Garage,Temperature,52.4
+2024-02-22 15:25:01,Garage,Humidity,37.5
+2024-02-22 15:25:01,Garage,BatteryVolts,5.26
+2024-02-22 15:25:01,Garage,BatteryPercent,62
+2024-02-22 15:37:02,Computer Room,Temperature,70.9
+2024-02-22 15:37:02,Computer Room,Humidity,27.9
+2024-02-22 15:37:02,Computer Room,BatteryVolts,5.22
+2024-02-22 15:37:02,Computer Room,BatteryPercent,61
+2024-02-22 16:39:59,Living Room,Temperature,66.2
+2024-02-22 16:39:59,Living Room,Humidity,32.3
+2024-02-22 16:39:59,Living Room,BatteryVolts,5.32
+2024-02-22 16:39:59,Living Room,BatteryPercent,65
+2024-02-22 16:43:01,Computer Room,Temperature,68.9
+2024-02-22 16:43:01,Computer Room,Humidity,29
+2024-02-22 16:43:01,Computer Room,BatteryVolts,5.23
+2024-02-22 16:43:01,Computer Room,BatteryPercent,61
+2024-02-22 17:01:02,Computer Room,Temperature,69
+2024-02-22 17:01:02,Computer Room,Humidity,29.4
+2024-02-22 17:01:02,Computer Room,BatteryVolts,5.23
+2024-02-22 17:01:02,Computer Room,BatteryPercent,61
+2024-02-22 17:02:02,Living Room,Temperature,66.2
+2024-02-22 17:02:02,Living Room,Humidity,32.7
+2024-02-22 17:02:02,Living Room,BatteryVolts,5.32
+2024-02-22 17:02:02,Living Room,BatteryPercent,65
+2024-02-22 17:03:59,Garage,Temperature,52.5
+2024-02-22 17:03:59,Garage,Humidity,37.3
+2024-02-22 17:03:59,Garage,BatteryVolts,5.26
+2024-02-22 17:03:59,Garage,BatteryPercent,62
+2024-02-22 17:28:01,Garage,Temperature,51.6
+2024-02-22 17:28:01,Garage,Humidity,37.7
+2024-02-22 17:28:01,Garage,BatteryVolts,5.26
+2024-02-22 17:28:01,Garage,BatteryPercent,62
+2024-02-22 18:12:00,Garage,Temperature,52.5
+2024-02-22 18:12:00,Garage,Humidity,37
+2024-02-22 18:12:00,Garage,BatteryVolts,5.26
+2024-02-22 18:12:00,Garage,BatteryPercent,62
+2024-02-22 18:38:01,Garage,Temperature,51.6
+2024-02-22 18:38:01,Garage,Humidity,37.5
+2024-02-22 18:38:01,Garage,BatteryVolts,5.26
+2024-02-22 18:38:01,Garage,BatteryPercent,62
+2024-02-22 19:02:01,Computer Room,Temperature,69.5
+2024-02-22 19:02:01,Computer Room,Humidity,28.7
+2024-02-22 19:02:01,Computer Room,BatteryVolts,5.22
+2024-02-22 19:02:01,Computer Room,BatteryPercent,61
+2024-02-22 19:03:01,Living Room,Temperature,65.8
+2024-02-22 19:03:01,Living Room,Humidity,32.4
+2024-02-22 19:03:01,Living Room,BatteryVolts,5.31
+2024-02-22 19:03:01,Living Room,BatteryPercent,65
+2024-02-22 19:04:02,Garage,Temperature,51.7
+2024-02-22 19:04:02,Garage,Humidity,37.1
+2024-02-22 19:04:02,Garage,BatteryVolts,5.26
+2024-02-22 19:04:02,Garage,BatteryPercent,62
+2024-02-22 21:03:02,Computer Room,Temperature,70.3
+2024-02-22 21:03:02,Computer Room,Humidity,28.1
+2024-02-22 21:03:02,Computer Room,BatteryVolts,5.23
+2024-02-22 21:03:02,Computer Room,BatteryPercent,61
+2024-02-22 21:04:00,Living Room,Temperature,65.5
+2024-02-22 21:04:00,Living Room,Humidity,32.2
+2024-02-22 21:04:00,Living Room,BatteryVolts,5.32
+2024-02-22 21:04:00,Living Room,BatteryPercent,65
+2024-02-22 21:04:58,Garage,Temperature,51.1
+2024-02-22 21:04:58,Garage,Humidity,37.2
+2024-02-22 21:04:58,Garage,BatteryVolts,5.26
+2024-02-22 21:04:58,Garage,BatteryPercent,63
+2024-02-22 21:16:02,Garage,Temperature,52
+2024-02-22 21:16:02,Garage,Humidity,36.7
+2024-02-22 21:16:02,Garage,BatteryVolts,5.26
+2024-02-22 21:16:02,Garage,BatteryPercent,63
+2024-02-22 21:40:02,Garage,Temperature,51.1
+2024-02-22 21:40:02,Garage,Humidity,37.2
+2024-02-22 21:40:02,Garage,BatteryVolts,5.26
+2024-02-22 21:40:02,Garage,BatteryPercent,62
+2024-02-22 22:10:06,Computer Room,Temperature,69.7
+2024-02-22 22:10:06,Computer Room,Humidity,29.8
+2024-02-22 22:10:06,Computer Room,BatteryVolts,5.23
+2024-02-22 22:10:06,Computer Room,BatteryPercent,61
+2024-02-22 22:21:35,Living Room,Temperature,65.3
+2024-02-22 22:21:35,Living Room,Humidity,36.1
+2024-02-22 22:21:35,Living Room,BatteryVolts,5.31
+2024-02-22 22:21:35,Living Room,BatteryPercent,65
+2024-02-22 22:23:25,Garage,Temperature,51.0
+2024-02-22 22:23:25,Garage,Humidity,37.4
+2024-02-22 22:23:25,Garage,BatteryVolts,5.26
+2024-02-22 22:23:25,Garage,BatteryPercent,62
+2024-02-22 22:27:02,Living Room,Temperature,66.9
+2024-02-22 22:27:02,Living Room,Humidity,32.2
+2024-02-22 22:27:02,Living Room,BatteryVolts,5.31
+2024-02-22 22:27:02,Living Room,BatteryPercent,65
+2024-02-22 22:29:02,Garage,Temperature,52.5
+2024-02-22 22:29:02,Garage,Humidity,35.9
+2024-02-22 22:29:02,Garage,BatteryVolts,5.26
+2024-02-22 22:29:02,Garage,BatteryPercent,62
+2024-02-22 22:32:02,Living Room,Temperature,66.0
+2024-02-22 22:32:02,Living Room,Humidity,32.5
+2024-02-22 22:32:02,Living Room,BatteryVolts,5.32
+2024-02-22 22:32:02,Living Room,BatteryPercent,66
+2024-02-22 22:36:02,Computer Room,Temperature,71.7
+2024-02-22 22:36:02,Computer Room,Humidity,27.2
+2024-02-22 22:36:02,Computer Room,BatteryVolts,5.24
+2024-02-22 22:36:02,Computer Room,BatteryPercent,61
+2024-02-22 22:40:01,Computer Room,Temperature,74.0
+2024-02-22 22:40:01,Computer Room,Humidity,25.4
+2024-02-22 22:40:01,Computer Room,BatteryVolts,5.24
+2024-02-22 22:40:01,Computer Room,BatteryPercent,61
+2024-02-22 22:43:01,Garage,Temperature,51.6
+2024-02-22 22:43:01,Garage,Humidity,36.6
+2024-02-22 22:43:01,Garage,BatteryVolts,5.26
+2024-02-22 22:43:01,Garage,BatteryPercent,62
+2024-02-22 22:56:02,Computer Room,Temperature,71.8
+2024-02-22 22:56:02,Computer Room,Humidity,26.7
+2024-02-22 22:56:02,Computer Room,BatteryVolts,5.24
+2024-02-22 22:56:02,Computer Room,BatteryPercent,61
+2024-02-22 23:27:02,Computer Room,Temperature,69.9
+2024-02-22 23:27:02,Computer Room,Humidity,28.1
+2024-02-22 23:27:02,Computer Room,BatteryVolts,5.24
+2024-02-22 23:27:02,Computer Room,BatteryPercent,61
+2024-02-22 23:44:01,Living Room,Temperature,65.1
+2024-02-22 23:44:01,Living Room,Humidity,32.7
+2024-02-22 23:44:01,Living Room,BatteryVolts,5.32
+2024-02-22 23:44:01,Living Room,BatteryPercent,65
+2024-02-23 00:03:00,Garage,Temperature,50.6
+2024-02-23 00:03:00,Garage,Humidity,36.9
+2024-02-23 00:03:00,Garage,BatteryVolts,5.26
+2024-02-23 00:03:00,Garage,BatteryPercent,62
+2024-02-23 00:11:04,Computer Room,Temperature,68.8
+2024-02-23 00:11:04,Computer Room,Humidity,28.8
+2024-02-23 00:11:04,Computer Room,BatteryVolts,5.24
+2024-02-23 00:11:04,Computer Room,BatteryPercent,61
+2024-02-23 00:22:01,Living Room,Temperature,64.6
+2024-02-23 00:22:01,Living Room,Humidity,32.9
+2024-02-23 00:22:01,Living Room,BatteryVolts,5.31
+2024-02-23 00:22:01,Living Room,BatteryPercent,65
+2024-02-23 00:24:02,Garage,Temperature,51.3
+2024-02-23 00:24:02,Garage,Humidity,36.3
+2024-02-23 00:24:02,Garage,BatteryVolts,5.26
+2024-02-23 00:24:02,Garage,BatteryPercent,62
+2024-02-23 01:07:02,Computer Room,Temperature,66.8
+2024-02-23 01:07:02,Computer Room,Humidity,29.4
+2024-02-23 01:07:02,Computer Room,BatteryVolts,5.24
+2024-02-23 01:07:02,Computer Room,BatteryPercent,61
+2024-02-23 01:17:00,Garage,Temperature,50.4
+2024-02-23 01:17:00,Garage,Humidity,36.7
+2024-02-23 01:17:00,Garage,BatteryVolts,5.26
+2024-02-23 01:17:00,Garage,BatteryPercent,62
+2024-02-23 01:41:00,Living Room,Temperature,63.7
+2024-02-23 01:41:00,Living Room,Humidity,32.9
+2024-02-23 01:41:00,Living Room,BatteryVolts,5.32
+2024-02-23 01:41:00,Living Room,BatteryPercent,65
+2024-02-23 01:49:01,Garage,Temperature,51.3
+2024-02-23 01:49:01,Garage,Humidity,36.7
+2024-02-23 01:49:01,Garage,BatteryVolts,5.26
+2024-02-23 01:49:01,Garage,BatteryPercent,62
+2024-02-23 02:12:00,Computer Room,Temperature,65.0
+2024-02-23 02:12:00,Computer Room,Humidity,29.8
+2024-02-23 02:12:00,Computer Room,BatteryVolts,5.23
+2024-02-23 02:12:00,Computer Room,BatteryPercent,61
+2024-02-23 02:23:02,Living Room,Temperature,63.2
+2024-02-23 02:23:02,Living Room,Humidity,32.9
+2024-02-23 02:23:02,Living Room,BatteryVolts,5.31
+2024-02-23 02:23:02,Living Room,BatteryPercent,65
+2024-02-23 02:25:01,Garage,Temperature,51.3
+2024-02-23 02:25:01,Garage,Humidity,36.9
+2024-02-23 02:25:01,Garage,BatteryVolts,5.26
+2024-02-23 02:25:01,Garage,BatteryPercent,62
+2024-02-23 03:34:00,Living Room,Temperature,62.3
+2024-02-23 03:34:00,Living Room,Humidity,33.0
+2024-02-23 03:34:00,Living Room,BatteryVolts,5.32
+2024-02-23 03:34:00,Living Room,BatteryPercent,65
+2024-02-23 03:51:59,Computer Room,Temperature,63.0
+2024-02-23 03:51:59,Computer Room,Humidity,29.8
+2024-02-23 03:51:59,Computer Room,BatteryVolts,5.24
+2024-02-23 03:51:59,Computer Room,BatteryPercent,61
+2024-02-23 04:13:02,Computer Room,Temperature,62.6
+2024-02-23 04:13:02,Computer Room,Humidity,29.8
+2024-02-23 04:13:02,Computer Room,BatteryVolts,5.24
+2024-02-23 04:13:02,Computer Room,BatteryPercent,61
+2024-02-23 04:24:04,Living Room,Temperature,61.8
+2024-02-23 04:24:04,Living Room,Humidity,33.2
+2024-02-23 04:24:04,Living Room,BatteryVolts,5.31
+2024-02-23 04:24:04,Living Room,BatteryPercent,65
+2024-02-23 04:25:59,Garage,Temperature,51.0
+2024-02-23 04:25:59,Garage,Humidity,36.5
+2024-02-23 04:25:59,Garage,BatteryVolts,5.26
+2024-02-23 04:25:59,Garage,BatteryPercent,62
+2024-02-23 04:30:02,Computer Room,Temperature,64.7
+2024-02-23 04:30:02,Computer Room,Humidity,28.7
+2024-02-23 04:30:02,Computer Room,BatteryVolts,5.24
+2024-02-23 04:30:02,Computer Room,BatteryPercent,61
+2024-02-23 04:43:02,Computer Room,Temperature,66.8
+2024-02-23 04:43:02,Computer Room,Humidity,27.9
+2024-02-23 04:43:02,Computer Room,BatteryVolts,5.22
+2024-02-23 04:43:02,Computer Room,BatteryPercent,61
+2024-02-23 04:48:01,Living Room,Temperature,62.8
+2024-02-23 04:48:01,Living Room,Humidity,32.7
+2024-02-23 04:48:01,Living Room,BatteryVolts,5.31
+2024-02-23 04:48:01,Living Room,BatteryPercent,65
+2024-02-23 05:00:01,Computer Room,Temperature,68.8
+2024-02-23 05:00:01,Computer Room,Humidity,27.3
+2024-02-23 05:00:01,Computer Room,BatteryVolts,5.23
+2024-02-23 05:00:01,Computer Room,BatteryPercent,61
+2024-02-23 05:11:01,Living Room,Temperature,63.7
+2024-02-23 05:11:01,Living Room,Humidity,32.4
+2024-02-23 05:11:01,Living Room,BatteryVolts,5.31
+2024-02-23 05:11:01,Living Room,BatteryPercent,65
+2024-02-23 06:09:00,Living Room,Temperature,64.6
+2024-02-23 06:09:00,Living Room,Humidity,32.0
+2024-02-23 06:09:00,Living Room,BatteryVolts,5.32
+2024-02-23 06:09:00,Living Room,BatteryPercent,65
+2024-02-23 06:14:00,Computer Room,Temperature,70.7
+2024-02-23 06:14:00,Computer Room,Humidity,26.8
+2024-02-23 06:14:00,Computer Room,BatteryVolts,5.24
+2024-02-23 06:14:00,Computer Room,BatteryPercent,61
+2024-02-23 06:25:01,Living Room,Temperature,64.6
+2024-02-23 06:25:01,Living Room,Humidity,31.9
+2024-02-23 06:25:01,Living Room,BatteryVolts,5.32
+2024-02-23 06:25:01,Living Room,BatteryPercent,65
+2024-02-23 06:27:00,Garage,Temperature,51.7
+2024-02-23 06:27:00,Garage,Humidity,36.0
+2024-02-23 06:27:00,Garage,BatteryVolts,5.26
+2024-02-23 06:27:00,Garage,BatteryPercent,62
+2024-02-23 08:15:00,Computer Room,Temperature,70.1
+2024-02-23 08:15:00,Computer Room,Humidity,28.4
+2024-02-23 08:15:00,Computer Room,BatteryVolts,5.26
+2024-02-23 08:15:00,Computer Room,BatteryPercent,62
+2024-02-23 08:25:58,Living Room,Temperature,65.2
+2024-02-23 08:25:58,Living Room,Humidity,31.6
+2024-02-23 08:25:58,Living Room,BatteryVolts,5.32
+2024-02-23 08:25:58,Living Room,BatteryPercent,65
+2024-02-23 08:28:00,Garage,Temperature,51.2
+2024-02-23 08:28:00,Garage,Humidity,36.3
+2024-02-23 08:28:00,Garage,BatteryVolts,5.26
+2024-02-23 08:28:00,Garage,BatteryPercent,62
+2024-02-23 10:15:59,Computer Room,Temperature,70.3
+2024-02-23 10:15:59,Computer Room,Humidity,27.0
+2024-02-23 10:15:59,Computer Room,BatteryVolts,5.24
+2024-02-23 10:15:59,Computer Room,BatteryPercent,61
+2024-02-23 10:27:00,Living Room,Temperature,65.3
+2024-02-23 10:27:00,Living Room,Humidity,31.2
+2024-02-23 10:27:00,Living Room,BatteryVolts,5.31
+2024-02-23 10:27:00,Living Room,BatteryPercent,65
+2024-02-23 10:28:59,Garage,Temperature,51.4
+2024-02-23 10:28:59,Garage,Humidity,34.8
+2024-02-23 10:28:59,Garage,BatteryVolts,5.26
+2024-02-23 10:28:59,Garage,BatteryPercent,62
+2024-02-23 10:47:02,Garage,Temperature,50.4
+2024-02-23 10:47:02,Garage,Humidity,35.4
+2024-02-23 10:47:02,Garage,BatteryVolts,5.24
+2024-02-23 10:47:02,Garage,BatteryPercent,62
+2024-02-23 11:05:02,Garage,Temperature,51.4
+2024-02-23 11:05:02,Garage,Humidity,34.8
+2024-02-23 11:05:02,Garage,BatteryVolts,5.26
+2024-02-23 11:05:02,Garage,BatteryPercent,62
+2024-02-23 11:31:01,Garage,Temperature,50.5
+2024-02-23 11:31:01,Garage,Humidity,35.4
+2024-02-23 11:31:01,Garage,BatteryVolts,5.26
+2024-02-23 11:31:01,Garage,BatteryPercent,62
+2024-02-23 11:41:02,Garage,Temperature,51.4
+2024-02-23 11:41:02,Garage,Humidity,34.9
+2024-02-23 11:41:02,Garage,BatteryVolts,5.26
+2024-02-23 11:41:02,Garage,BatteryPercent,62
+2024-02-23 12:03:01,Garage,Temperature,50.5
+2024-02-23 12:03:01,Garage,Humidity,35.2
+2024-02-23 12:03:01,Garage,BatteryVolts,5.24
+2024-02-23 12:03:01,Garage,BatteryPercent,61
+2024-02-23 12:16:58,Computer Room,Temperature,68.7
+2024-02-23 12:16:58,Computer Room,Humidity,28.5
+2024-02-23 12:16:58,Computer Room,BatteryVolts,5.24
+2024-02-23 12:16:58,Computer Room,BatteryPercent,61
+2024-02-23 12:27:59,Living Room,Temperature,65.0
+2024-02-23 12:27:59,Living Room,Humidity,32.9
+2024-02-23 12:27:59,Living Room,BatteryVolts,5.32
+2024-02-23 12:27:59,Living Room,BatteryPercent,65
+2024-02-23 12:30:01,Garage,Temperature,50.7
+2024-02-23 12:30:01,Garage,Humidity,35.0
+2024-02-23 12:30:01,Garage,BatteryVolts,5.24
+2024-02-23 12:30:01,Garage,BatteryPercent,61
+2024-02-23 12:48:01,Garage,Temperature,51.6
+2024-02-23 12:48:01,Garage,Humidity,34.5
+2024-02-23 12:48:01,Garage,BatteryVolts,5.26
+2024-02-23 12:48:01,Garage,BatteryPercent,62
+2024-02-23 13:21:01,Computer Room,Temperature,70.7
+2024-02-23 13:21:01,Computer Room,Humidity,27.1
+2024-02-23 13:21:01,Computer Room,BatteryVolts,5.24
+2024-02-23 13:21:01,Computer Room,BatteryPercent,61
+2024-02-23 14:18:01,Computer Room,Temperature,69.5
+2024-02-23 14:18:01,Computer Room,Humidity,28.6
+2024-02-23 14:18:01,Computer Room,BatteryVolts,5.24
+2024-02-23 14:18:01,Computer Room,BatteryPercent,61
+2024-02-23 14:27:59,Living Room,Temperature,66.0
+2024-02-23 14:27:59,Living Room,Humidity,32.5
+2024-02-23 14:27:59,Living Room,BatteryVolts,5.31
+2024-02-23 14:27:59,Living Room,BatteryPercent,65
+2024-02-23 14:29:02,Living Room,Temperature,66.0
+2024-02-23 14:29:02,Living Room,Humidity,32.4
+2024-02-23 14:29:02,Living Room,BatteryVolts,5.31
+2024-02-23 14:29:02,Living Room,BatteryPercent,65
+2024-02-23 14:30:59,Garage,Temperature,51.0
+2024-02-23 14:30:59,Garage,Humidity,34.8
+2024-02-23 14:30:59,Garage,BatteryVolts,5.26
+2024-02-23 14:30:59,Garage,BatteryPercent,62
