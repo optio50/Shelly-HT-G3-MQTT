@@ -16,6 +16,7 @@ to upgrade `pip install --upgrade paho-mqtt`
 `chmod +x HT-MQTT.py`    
 Rename the csv file to start your own (I have included mine so you can test the chart tool)    
 `mv HT-sensor-log.csv HT-sensor-log-old.csv`   
+Edit the HT-MQTT.py file and change the variables to mach your equipment.    
 `./HT-MQTT.py` to start viewing and recording data.    
 You can run the script from the terminal or a cron job / startup routine.    
 The H&T only comes online every so often.    
