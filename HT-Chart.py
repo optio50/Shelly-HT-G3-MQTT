@@ -1,76 +1,38 @@
 #!/usr/bin/env python3
-"""
-The following modules need to be installed:
-    pandas
-    numpy
-    matplotlib
-as in:
-pip install pandas numpy matplotlib
-"""
-
-"""
-This is a companion tool for the HT-MQTT.py script that displays (on the terminal) and stores data (in a csv file) from Shelly H&T G3 sensors.
-This tool only displays (in a chart) your already stored data (in a csv file) from the HT-MQTT.py script.
-
-Mostly ChatGPT generated Code. I have never used numpy, pandas or matplotlib. :-)
-"""
-
-
 import sys
+from tkinter import Toplevel, StringVar, ttk
 import pandas as pd
-import numpy as np
+#import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.widgets import Button
 from matplotlib.dates import DateFormatter
-from tkinter import Tk, simpledialog
+from tkcalendar import Calendar
 
-# Check if both CSV filename and Sensor Location are provided as command-line arguments
-if len(sys.argv) != 3:
-    print("Usage: ./script.py <csv_filename> <sensor_location>")
-    print("\nThe sensor location is the name you gave for HT1Location, HT2Location, HT3Location ")
-    print("\nOnly use one location at a time")
-    print("\nExample: ./HT-Chart.py HT-sensor-log.csv \"Living Room\"")
+# Check if CSV filename is provided as a command-line argument
+if len(sys.argv) != 2:
+    print(f"Usage: {sys.argv[0]} <csv_filename>")
     sys.exit(1)
 
-# Extract command-line arguments
+# Extract command-line argument
 csv_filename = sys.argv[1]
-sensor_location = sys.argv[2]
 
 # Load your CSV data
-df = pd.read_csv(csv_filename, parse_dates=['Timestamp'], date_format='%Y-%m-%d %H:%M:%S')
-#df = pd.read_csv(csv_filename, parse_dates=['Timestamp'])
-df.set_index('Timestamp', inplace=True)
+try:
+    df = pd.read_csv(
+        csv_filename, parse_dates=["Timestamp"], date_format="%Y-%m-%d %H:%M:%S"
+    )
+    df.set_index("Timestamp", inplace=True)
+except Exception as e:
+    print(f"Error loading CSV file: {e}")
+    sys.exit(1)
 
-# Filter the data based on the specified Sensor Location
-df_filtered = df[df['Sensor Location'] == sensor_location]
+current_location = df["Sensor Location"].unique()[0]
 
-# Get unique sensor types in the specified Sensor Location
-sensor_types = df_filtered['Sensor Type'].unique()
-
-# Specify individual colors for each sensor type
-individual_colors = ['red', 'blue', 'green', 'orangered']
+# Get unique sensor locations
+sensor_locations = df["Sensor Location"].unique()
 
 # Set the desired initial window size (width, height) in inches
 initial_figsize = (10, 7)  # Adjust the values based on your preference
-
-# Create a Tkinter window for date selection
-root = Tk()
-root.withdraw()  # Hide the main Tkinter window
-
-# Date picker dialog
-selected_date_str = simpledialog.askstring("Date Selection", "Enter Date (YYYY-MM-DD):\nLeave blank for all days")
-try:
-    selected_date = pd.to_datetime(selected_date_str).date()
-except (TypeError, ValueError) as e:
-    print(f"Error parsing date: {e}")
-    selected_date = None
-
-
-
-# Check if the entered date is valid
-if pd.isnull(selected_date):
-    print("Invalid date format or empty. Showing all days.")
-    selected_date = pd.Timestamp(df.index.min())
 
 # Create the main plot window
 fig_main, ax_main = plt.subplots(figsize=initial_figsize)
@@ -79,130 +41,209 @@ fig_main, ax_main = plt.subplots(figsize=initial_figsize)
 fig_main.subplots_adjust(left=0.055, right=1, bottom=0.2, top=0.95)
 
 # Background color for the window area
-fig_main.set_facecolor('darkgray')
+fig_main.set_facecolor("darkgray")
 
 # Background color for the plot area
-ax_main.set_facecolor('#353434')
-
-# Get the existing toolbar instance
-toolbar = fig_main.canvas.manager.toolbar
-
-# Activate the pan button
-toolbar.pan()
+ax_main.set_facecolor("#353434")
 
 # Plot each sensor type with a specified color
 lines = []
+sensor_types = df["Sensor Type"].unique()
+individual_colors = ["red", "blue", "green", "orangered"]
 for i, sensor_type in enumerate(sensor_types):
-    df_filtered_temp = df_filtered[df_filtered['Sensor Type'] == sensor_type]
+    df_filtered_temp = df[df["Sensor Type"] == sensor_type]
     x = df_filtered_temp.index.values
-    y = df_filtered_temp['Sensor Value'].values
-    line, = ax_main.plot(x, y, marker='o', label=f'{sensor_location} - {sensor_type}', color=individual_colors[i])
+    y = df_filtered_temp["Sensor Value"].values
+    (line,) = ax_main.plot(
+        x, y, marker="o", label=f"{sensor_type}", color=individual_colors[i]
+    )
     lines.append(line)
 
 # Format the timestamp on the x-axis
-date_form = DateFormatter("%Y-%m-%d %H:%M:%S")
+date_form = DateFormatter("%Y-%m-%d %H:%M")
 ax_main.xaxis.set_major_formatter(date_form)
 
 # Increase the bottom margin to accommodate the angled timestamps
 plt.subplots_adjust(bottom=0.2)
 
-# Function to update annotation on mouse hover
-def update_annot(event):
-    visible_lines = [line for line in lines if line.contains(event)[0]]
-    if visible_lines:
-        line = visible_lines[0]
-        x, y = line.get_data()
-        ind = line.contains(event)[1]["ind"][0]
-        timestamp_str = pd.to_datetime(str(x[ind])).strftime("%Y-%m-%d %H:%M:%S")
-        text = f"({timestamp_str}, {y[ind]:.2f})"
-        annot.xy = (x[ind], y[ind])
-        annot.set_text(text)
-        annot.set_visible(True)
-        fig_main.canvas.draw_idle()
-    else:
-        annot.set_visible(False)
-        fig_main.canvas.draw_idle()
-
-# Function to handle mouse motion
-def hover(event):
-    if event.inaxes == ax_main:
-        update_annot(event)
-
-# Connect the hover function to the motion_notify_event
-fig_main.canvas.mpl_connect("motion_notify_event", hover)
-
-# Add annotation
-annot = ax_main.annotate("", xy=(0, 0), xytext=(20, 20), textcoords="offset points", bbox=dict(boxstyle="round", fc="w"))
-
-# Set labels and title
-ax_main.set_xlabel('Timestamp')
-ax_main.set_ylabel('Sensor Value')
-ax_main.set_title(f'{sensor_location} Sensor Data')
-
-# Set window title using manager.set_window_title
-fig_main.canvas.manager.set_window_title(f'HT-Sensor - {sensor_location} Data')
-
-# Rotate x-axis labels for better alignment
-ax_main.tick_params(axis='x', rotation=45)  # Remove ha='right'
-
-# Increase the bottom margin to accommodate the rotated timestamps
-plt.subplots_adjust(bottom=0.25)  # Adjust the value as needed
-
-# Adjust the alignment of x-axis tick labels
-for label in ax_main.get_xticklabels():
-    label.set_horizontalalignment('right')
-
-# Add legend
-leg = ax_main.legend()
-leg.set_draggable(True)
+# Initialize selected_date as a list to allow modification within the set_date function
+selected_date = [df.index.min()]
 
 # Function to update the main plot based on the selected date
-def update_date(selected_date):
-    ax_main.set_xlim(selected_date, selected_date + pd.Timedelta(days=1))  # Adjust the duration as needed
+def update_date():
+    ax_main.set_xlim(
+        selected_date[0], selected_date[0] + pd.Timedelta(days=1)
+    )  # Adjust the duration as needed
     fig_main.canvas.draw_idle()
 
-# Function to handle mouse double-click event for date selection
-def on_date_picker_click(event):
-    if event.dblclick:
-        selected_date_str = simpledialog.askstring("Date Selection", "Enter Date (YYYY-MM-DD):")
-        if selected_date_str:
-            selected_date = pd.to_datetime(selected_date_str, errors='coerce').date()
-            update_date(selected_date)
-
-# Connect the on_date_picker_click function to the button_press_event
-fig_main.canvas.mpl_connect("button_press_event", on_date_picker_click)
-
 # Function to reset zoom on "Home" button press
-# Function to reset zoom to include all days
 def reset_zoom_all_days(event):
     ax_main.relim()
     ax_main.autoscale_view()
     ax_main.set_xlim(df.index.min(), df.index.max())  # Set limits to include all days
     fig_main.canvas.draw_idle()
 
-# Function to handle the date picker button click
-def on_date_picker_button_click(event):
-    selected_date_str = simpledialog.askstring("Date Selection", "Enter Date (YYYY-MM-DD):")
-    if selected_date_str:
-        selected_date = pd.to_datetime(selected_date_str, errors='coerce').date()
-        update_date(selected_date)
+# Add annotation
+annot = ax_main.annotate(
+    "",
+    xy=(0, 0),
+    xytext=(20, 20),
+    textcoords="offset points",
+    bbox=dict(boxstyle="round", fc="w"),
+)
 
-# Create a custom home button with hover color
-home_ax = plt.axes([0.87, 0.01, 0.12, 0.04])  # Adjust the position and size as needed
-home_button = Button(home_ax, 'Show All Days', color='#353434', hovercolor='green')  # Specify the normal and hover color
+# Function to open calendar dialog
+def pick_date(event=None):  # Default event=None allows calling it without an event
+    top = Toplevel()
+    top.title("Date Selection")
+    cal = Calendar(top, selectmode="day")
+    cal.pack(padx=10, pady=10)
 
-# Create a custom date picker button with hover color
-date_picker_ax = plt.axes([0.75, 0.01, 0.12, 0.04])  # Adjust the position and size as needed
-date_picker_button = Button(date_picker_ax, 'Pick Date', color='#353434', hovercolor='blue')  # Specify the normal and hover color
+    # Function to set the selected date
+    def set_date():
+        selected_date[0] = pd.to_datetime(cal.get_date(), errors="coerce").date()
+        update_date()
+        top.destroy()
 
-# Connect the custom date picker button to the on_date_picker_button_click function
-date_picker_button.on_clicked(on_date_picker_button_click)
+    ok_button = ttk.Button(top, text="OK", command=set_date)
+    ok_button.pack(pady=10)
 
-# Connect the custom home button to the reset_zoom_all_days function
+    # Function to update annotation on mouse hover
+    def update_annot(event):
+        if event.inaxes == ax_main:
+            visible_lines = [line for line in lines if line.contains(event)[0]]
+            if visible_lines:
+                line = visible_lines[0]
+                x, y = line.get_data()
+                ind = line.contains(event)[1]["ind"][0]
+                timestamp_str = pd.to_datetime(str(x[ind])).strftime("%Y-%m-%d %H:%M:%S")
+                text = f"Date: {timestamp_str}\nValue: {y[ind]:.2f}"
+                annot.xy = (x[ind], y[ind])
+                annot.set_text(text)
+                annot.set_visible(True)
+                fig_main.canvas.draw_idle()
+            else:
+                annot.set_visible(False)
+                fig_main.canvas.draw_idle()
+
+    # Function to handle mouse motion
+    def hover(event):
+        update_annot(event)
+
+    # Connect the hover function to the motion_notify_event
+    fig_main.canvas.mpl_connect("motion_notify_event", hover)
+
+    # Block execution until the calendar window is closed
+    top.attributes('-topmost', True)
+    top.grab_set()
+    top.wait_window()
+
+# Function to load chart data based on selected location
+def load_chart_data(ax, sensor_location):
+    df_filtered = df[df["Sensor Location"] == sensor_location]
+
+    # Clear existing plots
+    for line in lines:
+        line.remove()
+
+    lines.clear()
+
+    # Plot each sensor type with a specified color
+    for i, sensor_type in enumerate(sensor_types):
+        df_filtered_temp = df_filtered[df_filtered["Sensor Type"] == sensor_type]
+        x = df_filtered_temp.index.values
+        y = df_filtered_temp["Sensor Value"].values
+        (line,) = ax.plot(
+            x,
+            y,
+            marker="o",
+            label=f"{sensor_location} - {sensor_type}",
+            color=individual_colors[i],
+        )
+        lines.append(line)
+
+    # Update labels and title
+    ax.set_title(f"{sensor_location} Sensor Data")
+
+    # Redraw the legend
+    leg = ax.legend()
+    leg.set_draggable(True)
+
+    # Update the plot
+    fig_main.canvas.draw_idle()
+
+# Function to handle "Select Location" button click
+def select_location(event):
+    # Open a dialog to pick a new location
+    new_location = pick_location()
+    if new_location is not None:
+        # Load chart data for the new location
+        load_chart_data(ax_main, new_location)
+
+"""
+# Function to handle "Show All Days" button click
+def reset_zoom_all_days(event):
+    ax_main.relim()
+    ax_main.autoscale_view()
+    ax_main.set_xlim(df.index.min(), df.index.max())  # Set limits to include all days
+    fig_main.canvas.draw_idle()
+"""
+
+# Function to open a dialog for location selection
+def pick_location():
+    top = Toplevel()
+    top.title("Select Location")
+    label = ttk.Label(top, text="Choose a location:")
+    label.pack(padx=10, pady=10)
+    location_var = StringVar()
+
+    # Use a Combobox to display unique values of "Sensor Location"
+    location_combobox = ttk.Combobox(
+        top, textvariable=location_var, values=tuple(sensor_locations), width=40, state="readonly"
+    )
+    location_combobox.pack(padx=10, pady=10)
+    location_combobox.set(current_location)
+
+    # Function to set the selected location
+    def set_location():
+        top.destroy()
+        # Load chart data for the new location
+        load_chart_data(ax_main, location_var.get())
+
+    ok_button = ttk.Button(top, text="OK", command=set_location)
+    ok_button.pack(pady=10)
+
+    # Block execution until the location window is closed
+    top.attributes('-topmost', True)
+    top.grab_set()
+    top.wait_window()
+
+# Connect the custom "Select Location" button to the select_location function
+select_location_ax = plt.axes([0.4, 0.01, 0.15, 0.04])
+select_location_button = Button(select_location_ax,
+                                "Select Location", color="#353434", hovercolor="blue")
+select_location_button.on_clicked(select_location)
+# Connect the custom "Show All Days" button to the reset_zoom_all_days function
+home_ax = plt.axes([0.6, 0.01, 0.2, 0.04])
+home_button = Button(home_ax, "Show All Days", color="#353434", hovercolor="green")
 home_button.on_clicked(reset_zoom_all_days)
 
-# Update the main plot with the selected date
-update_date(selected_date)
+# Connect the custom "Select Date" button to the pick_date function
+pick_date_ax = plt.axes([0.2, 0.01, 0.15, 0.04])
+pick_date_button = Button(pick_date_ax, "Select Date", color="#353434", hovercolor="red")
+pick_date_button.on_clicked(pick_date)
+
+# Initialize the chart with the initial location
+load_chart_data(ax_main, sensor_locations[0])
+
+# Angle the bottom x-axis labels for better readability
+for tick in ax_main.get_xticklabels():
+    tick.set_rotation(25)
+    tick.set_ha('right')
+
+
+# Simulate "Select Date" button click before showing the main window
+pick_date()
 
 # Show the plot using plt.show() to launch the interactive window
-plt.show(block=True)
+plt.show()

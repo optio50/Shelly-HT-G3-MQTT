@@ -10,6 +10,9 @@ from time import sleep
 import json
 
 # MQTT
+# Only paho-mqtt > Version 2 is supported. pip install --upgrade paho-mqtt
+# The list of breaking change's
+# https://eclipse.dev/paho/files/paho.mqtt.python/html/migrations.html
 import paho.mqtt.client as mqtt
 import paho.mqtt.subscribe as subscribe
 import paho.mqtt.publish as mqttpublish
@@ -18,18 +21,38 @@ import paho.mqtt.publish as mqttpublish
 # The values only update after it transmits a Full Status Notification. (Threshold met or 2 hours)
 # You can hook up an external power supply to increase the transmit frequency to 5 min.
 # Values will be empty until an update has been triggered.
-# You can manually trigger an update by single pressing the reset button.
+# You can manually trigger an update by single pressing the reset button. "SET" is displayed, wait 5 seconds
+# and EXIT SET (Single press again).
 
 # 🠉   reading is increasing from last update
 # 🠋   reading is decreasing from last update
 # 🠈🠊 reading is the same as last update
 
+# Text Colors
+Orange     = "\033[38;5;214m"
+Magenta    = "\033[38;5;201m"
+Blue       = "\033[38;5;27m"
+Red        = "\033[38;5;196m"
+BGRed      = "\033[48;5;196m" # Background Red
+Black      = "\033[38;5;16m"
+Cyan       = "\033[38;5;51m"
+Yellow     = "\033[38;5;226m"
+Purple     = "\033[38;5;129m"
+Green      = "\033[38;5;28m"
+DarkOrange = "\033[38;5;166m"
+Pink       = "\033[38;5;212m"
+Reset      = "\033[0m" # Default Color
+clear      = "\033[K\033[1K" # Eliminates screen flashing / blink during fast refresh rates.
+                             # It clear's to end of line and moves to begining of line then prints the new line
+
+
+
 
 # IP of the broker that holds the MQTT values
-ip   = '192.168.20.167'          # <------ Change This
+ip   = '192.168.20.167'         # <------ Change This
 port = 1883
 #======================================
-# Number of H&T's you have (5 or less)
+# Number of H&T's you have (6 or less)
 Qty = 5                         # <------ Change This
 #======================================
 # MQTT H&T Topic Prefix on the broker as in H&T-Computer-Room/events/rpc (Just the prefix part H&T-Computer-Room)
@@ -112,13 +135,11 @@ HT5HumidOLD    = None
 HT6TempOLD     = None
 HT6HumidOLD    = None
 
-
 disconnect_flag = ''
 
 print("\033[H\033[J") # Clear screen
 print('\033[?25l', end="") # Hide Blinking Cursor
-clear = "\033[K\033[1K" # Eliminates screen flashing / blink during refresh
-                        # It clear's to end of line and moves to begining of line then prints the new line
+
 
 def log_sensor_data(sensor_name, sensor_type, sensor_value, timestamp):
     with open('HT-sensor-log.csv', 'a', newline='') as csvfile:
@@ -140,7 +161,7 @@ def on_connect(client, userdata, flags, reason_code, properties):
         print("\033[H\033[J") # Clear screen
         disconnect_flag = 0
     else:
-        print(f"\033[38;5;130mConnected to Broker {ip} with result code {str(reason_code )}\033[0m")
+        print(f"{DarkOrange}Connected to Broker {ip}\033[0m")
 
     topics = [
               (HT1Prefix+"/events/rpc",0),
@@ -152,55 +173,32 @@ def on_connect(client, userdata, flags, reason_code, properties):
               ]
 
     client.subscribe(topics)
-    print("\033[38;5;127mWaiting For Shelly MQTT Broker Messages\n\033[0m")
+    print(f"{Purple}Waiting For Shelly MQTT Broker Messages\n{Reset}")
 
 
 def on_disconnect(client, userdata, flags, reason_code, properties):
-    global disconnect_flag
-    RC = {1: "Out of memory",
-          2: "A network protocol error occurred when communicating with the broker.",
-          3: "Invalid function arguments provided.",
-          4: "The client is not currently connected.",
-          5: "Connection Refused",
-          6: "Connection Not Found",
-          7: "Connection Lost",
-          8: "A TLS error occurred.",
-          9: "Payload too large.",
-          10: "This feature is not supported.",
-          11: "Authorisation failed.",
-          12: "Access denied by ACL.",
-          13: "Unknown error.",
-          14: "Error defined by errno.",
-          15: "Message queue full.",
-          16: "Connection Lost for Unknown Reason"
-         }
+    # This should survive a Venus Reboot and reconnect so previous chart data will not be lost
+    global flag_connected
+    flag_connected = 0
 
-    if reason_code != 0:
+    if reason_code == 0:
+        client.loop_stop()
+        print(f"\033[38;5;148mStopping MQTT Loop")
+        print(f"Disconnect Result Code {str(reason_code)}\033[0m\n")
+    
+    else:
         Disconnect = datetime.now()
         Disconnect_dt_string = Disconnect.strftime("%a %d %b %Y     %r")
         print(f"\033[38;5;196mUnexpected Disconnect \033[0m{Disconnect_dt_string}")
-        print(f"Disconnect Code {str(reason_code )} {RC[reason_code ]}" )
+        print(f"Disconnect Reason {reason_code}" )
         print(f"\033[38;5;196mTrying to Reconnect....\033[0m")
+        try:
+            client.reconnect()
+        except ConnectionRefusedError:
+            print(f"Connection Refused Error...Retrying")
 
-        if reason_code in range(1, 17):
-            try:
-                client.reconnect()
-                disconnect_flag = 1
-            except ConnectionRefusedError:
-                print(f"Connection Refused Error...Retrying")
-
-            except TimeoutError:
-                print(f"Connection Timeout Error...Retrying")
-
-        else:
-            print(f"\033[38;5;196mUnexpected Disconnect reason unknown \033[0m")
-            print(f"Disconnect Code {str(reason_code )}")
-    else:
-        client.loop_stop()
-        print(f"\033[38;5;148mStopping MQTT Loop")
-        print(f"Disconnect Result Code {str(reason_code )}\033[0m\n")
-        print('\033[?25h', end="") # Restore Blinking Cursor
-        quit()
+        except TimeoutError:
+            print(f"Connection Timeout Error...Retrying")
 
 
 #===================================
@@ -345,8 +343,8 @@ def on_message(client, userdata, msg):
             log_sensor_data(HT3Location, "BatteryVolts", HT3BattV, timestamp)
             time.sleep(.2)
             log_sensor_data(HT3Location, "BatteryPercent", HT3BattPercent, timestamp)
-    
-    
+
+
     if msg.topic == HT4Prefix+"/events/rpc":
         HT4FullStatus = json.loads(msg.payload)['method']
         if HT4FullStatus == "NotifyFullStatus":
@@ -388,8 +386,8 @@ def on_message(client, userdata, msg):
             log_sensor_data(HT4Location, "BatteryVolts", HT4BattV, timestamp)
             time.sleep(.2)
             log_sensor_data(HT4Location, "BatteryPercent", HT4BattPercent, timestamp)
-    
-    
+
+
     if msg.topic == HT5Prefix+"/events/rpc":
         HT5FullStatus = json.loads(msg.payload)['method']
         if HT5FullStatus == "NotifyFullStatus":
@@ -431,8 +429,8 @@ def on_message(client, userdata, msg):
             log_sensor_data(HT5Location, "BatteryVolts", HT5BattV, timestamp)
             time.sleep(.2)
             log_sensor_data(HT5Location, "BatteryPercent", HT5BattPercent, timestamp)
-    
-    
+
+
     if msg.topic == HT6Prefix+"/events/rpc":
         HT6FullStatus = json.loads(msg.payload)['method']
         if HT6FullStatus == "NotifyFullStatus":
@@ -474,15 +472,12 @@ def on_message(client, userdata, msg):
             log_sensor_data(HT6Location, "BatteryVolts", HT6BattV, timestamp)
             time.sleep(.2)
             log_sensor_data(HT6Location, "BatteryPercent", HT6BattPercent, timestamp)
-    
-    
+
+
 
 #===================================
 # Create a mqtt client instance
-#client = mqtt.Client(callback_api_version=mqtt.CALLBACK_VERSION_2)
-#client = mqtt.Client.__init__(callback_api_version=mqtt.CALLBACK_VERSION_)
-#client = mqtt.Client.__init__(mqtt.CallbackAPIVersion.VERSION1)
-client = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2) 
+client = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2)
 
 
 # Assign callback functions
@@ -491,11 +486,11 @@ client.on_message    = on_message
 client.on_disconnect = on_disconnect
 
 # Connect to the broker
-print(f"\n\033[38;5;28mTrying to Connect To Broker {ip}")
+print(f"\n{Green}Trying to Connect To Broker {ip}")
 try:
     client.connect(ip, port, 60)
 except TimeoutError:
-    print(f"\033[48;5;196m\033[38;5;16mUnable to Connect To Broker {ip}\033[0m")
+    print(f"{BGRed}{Black}Unable to Connect To Broker {ip}{Reset}")
     print('\033[?25h', end="") # Restore Blinking Cursor
     quit()
 
@@ -510,65 +505,65 @@ while True:
         print("\033[0;0f") # move to col 0 row 0 to start the printing at the same spot everytime
                            # instead of having the text scoll up the screen just reuse the same spot on the screen
                            # the "clear" in the following lines erases the line and reprints wih new values from the begining of the line
-        print(f"\033[0m{clear}{HT1Time}")
-        print(f"{clear}\033[38;5;214m{HT1Location + ' Temperature': <30} {HT1Temp}° F  {HT1TempDir}")
+        print(f"{Reset}{clear}{HT1Time}")
+        print(f"{clear}{Orange}{HT1Location + ' Temperature': <30} {HT1Temp}° F  {HT1TempDir}")
         print(f"{clear}{HT1Location + ' Humidity': <30} {HT1Humid}%    {HT1HumidDir}")
         print(f"{clear}{HT1Location + ' Battery Voltage': <30} {HT1BattV}V")
         print(f"{clear}{HT1Location + ' Battery Percent': <30} {HT1BattPercent}%\033[0m")
-        print(f"\033[0m{clear}")
+        print(f"{Reset}{clear}")
         print("=" * 70, "\n")
 
 
         if Qty > 1:
-            print(f"\033[0m{clear}{HT2Time}")
-            print(f"{clear}\033[38;5;201m{HT2Location + ' Temperature': <30} {HT2Temp}° F  {HT2TempDir}")
+            print(f"{Reset}{clear}{HT2Time}")
+            print(f"{clear}{Magenta}{HT2Location + ' Temperature': <30} {HT2Temp}° F  {HT2TempDir}")
             print(f"{clear}{HT2Location + ' Humidity': <30} {HT2Humid}%    {HT2HumidDir}")
             print(f"{clear}{HT2Location + ' Battery Voltage': <30} {HT2BattV}V")
             print(f"{clear}{HT2Location + ' Battery Percent': <30} {HT2BattPercent}%\033[0m")
-            print(f"\033[0m{clear}")
+            print(f"{Reset}{clear}")
             print("=" * 70, "\n")
 
         if Qty > 2:
-            print(f"\033[0m{clear}{HT3Time}")
-            print(f"{clear}\033[38;5;27m{HT3Location + ' Temperature': <30} {HT3Temp}° F  {HT3TempDir}")
+            print(f"{Reset}{clear}{HT3Time}")
+            print(f"{clear}{Blue}{HT3Location + ' Temperature': <30} {HT3Temp}° F  {HT3TempDir}")
             print(f"{clear}{HT3Location + ' Humidity': <30} {HT3Humid}%    {HT3HumidDir}")
             print(f"{clear}{HT3Location + ' Battery Voltage': <30} {HT3BattV}V")
             print(f"{clear}{HT3Location + ' Battery Percent': <30} {HT3BattPercent}%\033[0m")
-            print(f"\033[0m{clear}")
+            print(f"{Reset}{clear}")
             print("=" * 70, "\n")
-            
+
         if Qty > 3:
-            print(f"\033[0m{clear}{HT4Time}")
-            print(f"{clear}\033[38;5;51m{HT4Location + ' Temperature': <30} {HT4Temp}° F  {HT4TempDir}")
+            print(f"{Reset}{clear}{HT4Time}")
+            print(f"{clear}{Cyan}{HT4Location + ' Temperature': <30} {HT4Temp}° F  {HT4TempDir}")
             print(f"{clear}{HT4Location + ' Humidity': <30} {HT4Humid}%    {HT4HumidDir}")
             print(f"{clear}{HT4Location + ' Battery Voltage': <30} {HT4BattV}V")
             print(f"{clear}{HT4Location + ' Battery Percent': <30} {HT4BattPercent}%\033[0m")
-            print(f"\033[0m{clear}")
+            print(f"{Reset}{clear}")
             print("=" * 70, "\n")
-            
+
         if Qty > 4:
-            print(f"\033[0m{clear}{HT5Time}")
-            print(f"{clear}\033[38;5;226m{HT5Location + ' Temperature': <30} {HT5Temp}° F  {HT5TempDir}")
+            print(f"{Reset}{clear}{HT5Time}")
+            print(f"{clear}{Yellow}{HT5Location + ' Temperature': <30} {HT5Temp}° F  {HT5TempDir}")
             print(f"{clear}{HT5Location + ' Humidity': <30} {HT5Humid}%    {HT5HumidDir}")
             print(f"{clear}{HT5Location + ' Battery Voltage': <30} {HT5BattV}V")
             print(f"{clear}{HT5Location + ' Battery Percent': <30} {HT5BattPercent}%\033[0m")
-            print(f"\033[0m{clear}")
+            print(f"{Reset}{clear}")
             print("=" * 70, "\n")
-            
+
         if Qty > 5:
-            print(f"\033[0m{clear}{HT6Time}")
-            print(f"{clear}\033[38;5;129m{HT6Location + ' Temperature': <30} {HT6Temp}° F  {HT6TempDir}")
+            print(f"{Reset}{clear}{HT6Time}")
+            print(f"{clear}{Green}{HT6Location + ' Temperature': <30} {HT6Temp}° F  {HT6TempDir}")
             print(f"{clear}{HT6Location + ' Humidity': <30} {HT6Humid}%    {HT6HumidDir}")
             print(f"{clear}{HT6Location + ' Battery Voltage': <30} {HT6BattV}V")
             print(f"{clear}{HT6Location + ' Battery Percent': <30} {HT6BattPercent}%\033[0m")
-            print(f"\033[0m{clear}")
+            print(f"{Reset}{clear}")
             print("=" * 70, "\n")
 
         time.sleep(15) # Wait seconds then see if a new reading has been received
 
     except KeyboardInterrupt:
         print("\033[K\033[1K") # Erase the line (removes the printed ^C)
-        print(f"\n\033[38;5;148mExiting App\033[0m")
+        print(f"\n{Pink}Exiting App{Reset}")
         print('\033[?25h', end="") # Restore Blinking Cursor
         client.disconnect() # Disconnect from the broker and print the disconnect message
         time.sleep(1) # small time for the disconnect to run
